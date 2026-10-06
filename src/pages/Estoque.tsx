@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Search, SlidersHorizontal, X, RotateCcw } from 'lucide-react'
 import { VehicleCard } from '../components/VehicleCard'
-import { BRANDS, fuel, vehicles, title } from '../lib/data'
+import { BRANDS, fuel, title, Vehicle } from '../lib/data'
+import { useStore } from '../lib/store'
 
 type F = { q: string; marca: string; modelo: string; min: string; max: string; ano: string; kmMax: string; comb: string; cambio: string; tipo: string; destaque: string }
 const EMPTY: F = { q: '', marca: '', modelo: '', min: '', max: '', ano: '', kmMax: '', comb: '', cambio: '', tipo: '', destaque: '' }
@@ -17,10 +18,11 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 const inp = 'h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-100 shadow-sm'
 
 function Panel({ f, set, reset }: { f: F; set: (k: keyof F, v: string) => void; reset: () => void }) {
-  const brands = [...new Set(vehicles.map(v => v.marca.split(' ')[0]))].sort()
-  const models = [...new Set(vehicles.filter(v => !f.marca || v.marca.toLowerCase().startsWith(f.marca.toLowerCase())).map(v => v.modelo))].sort()
-  const anos = [...new Set(vehicles.map(v => v.anoMod))].sort((a, b) => b - a)
-  const cats = [...new Set(vehicles.map(v => v.categoria).filter(Boolean))]
+  const { vehicles: allVehicles } = useStore()
+  const brands = [...new Set(allVehicles.map(v => v.marca.split(' ')[0]))].sort()
+  const models = [...new Set(allVehicles.filter(v => !f.marca || v.marca.toLowerCase().startsWith(f.marca.toLowerCase())).map(v => v.modelo))].sort()
+  const anos = [...new Set(allVehicles.map(v => v.anoMod))].sort((a, b) => b - a)
+  const cats = [...new Set(allVehicles.map(v => v.categoria).filter(Boolean))]
   return (
     <div className="space-y-4 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -29,7 +31,7 @@ function Panel({ f, set, reset }: { f: F; set: (k: keyof F, v: string) => void; 
           <RotateCcw size={13} /> Limpar
         </button>
       </div>
-      <Field label="Marca"><select className={inp} value={f.marca} onChange={e => { set('marca', e.target.value); set('modelo', '') }}><option value="">Todas as marcas</option>{[...new Set([...brands, ...BRANDS.filter(b => vehicles.some(v => v.marca.startsWith(b)))])].sort().map(b => <option key={b}>{b}</option>)}</select></Field>
+      <Field label="Marca"><select className={inp} value={f.marca} onChange={e => { set('marca', e.target.value); set('modelo', '') }}><option value="">Todas as marcas</option>{[...new Set([...brands, ...BRANDS.filter(b => allVehicles.some(v => v.marca.startsWith(b)))])].sort().map(b => <option key={b}>{b}</option>)}</select></Field>
       <Field label="Modelo"><select className={inp} value={f.modelo} onChange={e => set('modelo', e.target.value)}><option value="">Todos os modelos</option>{models.map(m => <option key={m}>{m}</option>)}</select></Field>
       <div className="grid grid-cols-2 gap-2.5">
         <Field label="Preço mín."><input className={inp} inputMode="numeric" placeholder="R$ 0" value={f.min} onChange={e => set('min', e.target.value.replace(/\D/g, ''))} /></Field>
@@ -48,8 +50,8 @@ function Panel({ f, set, reset }: { f: F; set: (k: keyof F, v: string) => void; 
   )
 }
 
-
 export default function Estoque() {
+  const { vehicles } = useStore()
   const [sp, setSp] = useSearchParams()
   const [sheet, setSheet] = useState(false)
   const [sort, setSort] = useState('recentes')
@@ -57,6 +59,7 @@ export default function Estoque() {
   const set = (k: keyof F, v: string) => { const n = new URLSearchParams(sp); v ? n.set(k, v) : n.delete(k); setSp(n, { replace: true }) }
   const list = useMemo(() => {
     let r = vehicles.filter(v => {
+      if (v.status === 'vendido' || v.status === 'inativo') return false
       const hay = `${v.marca} ${v.modelo} ${v.versao}`.toLowerCase()
       return (!f.q || f.q.toLowerCase().split(' ').every(t => hay.includes(t)))
         && (!f.marca || v.marca.toLowerCase().startsWith(f.marca.toLowerCase())) && (!f.modelo || v.modelo === f.modelo)
@@ -64,9 +67,9 @@ export default function Estoque() {
         && (f.kmMax === '' || v.km <= +f.kmMax) && (!f.comb || v.combustivel === f.comb) && (!f.cambio || v.cambio === f.cambio)
         && (!f.tipo || v.categoria === f.tipo) && (!f.destaque || v.destaque)
     })
-    const s = { recentes: (a: typeof r[0], b: typeof r[0]) => b.entrada.localeCompare(a.entrada), menor: (a: typeof r[0], b: typeof r[0]) => a.preco - b.preco, maior: (a: typeof r[0], b: typeof r[0]) => b.preco - a.preco, km: (a: typeof r[0], b: typeof r[0]) => a.km - b.km }[sort]!
+    const s = { recentes: (a: typeof r[0], b: typeof r[0]) => (b.entrada || '').localeCompare(a.entrada || ''), menor: (a: typeof r[0], b: typeof r[0]) => a.preco - b.preco, maior: (a: typeof r[0], b: typeof r[0]) => b.preco - a.preco, km: (a: typeof r[0], b: typeof r[0]) => a.km - b.km }[sort]!
     return [...r].sort(s)
-  }, [sp, sort])
+  }, [vehicles, sp, sort])
   const active = [...sp.keys()].length
 
   return (

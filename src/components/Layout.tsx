@@ -194,6 +194,7 @@ export function Footer() {
     ['Simular Financiamento', '/financiamento'],
     ['Avalie seu Veículo', '/avaliacao'],
     ['Fale Conosco', '/contato'],
+    ['Painel de Gestão (CMS)', '/admin'],
   ]
   
   return (
@@ -217,9 +218,15 @@ export function Footer() {
           <a href={waLink('Olá!')} className="flex gap-2 text-slate-600 text-xs sm:text-sm font-medium hover:text-yellow-700"><Phone size={15} className="mt-0.5 text-yellow-600" />WhatsApp: {SITE.phone}</a>
         </FooterCol>
       </div>
-      <div className="mx-auto mt-12 flex max-w-[1480px] flex-col justify-between gap-3 border-t border-slate-100 px-6 pt-6 text-xs text-slate-400 font-medium lg:flex-row lg:px-12">
+      <div className="mx-auto mt-12 flex max-w-[1480px] flex-col justify-between items-center gap-3 border-t border-slate-100 px-6 pt-6 text-xs text-slate-400 font-medium lg:flex-row lg:px-12">
         <p>© {new Date().getFullYear()} Baruch Veículos · CNPJ cadastrado · Todos os direitos reservados.</p>
-        <p>Av. dos Africanos, 386 · Bairro de Fátima · São Luís - MA, 65031-455</p>
+        <div className="flex items-center gap-4">
+          <p>Av. dos Africanos, 386 · São Luís - MA</p>
+          <span>·</span>
+          <Link to="/admin" className="text-slate-400 hover:text-yellow-600 transition flex items-center gap-1 font-semibold">
+            🔒 Acesso Administrativo
+          </Link>
+        </div>
       </div>
     </footer>
   )

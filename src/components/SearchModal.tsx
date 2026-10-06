@@ -6,7 +6,7 @@ import { useStore } from '../lib/store'
 import { brl, isMoto, kmFmt, title, vehicles, years } from '../lib/data'
 
 export function SearchModal() {
-  const { searchOpen, setSearchOpen } = useStore()
+  const { searchOpen, setSearchOpen, vehicles } = useStore()
   const [q, setQ] = useState('')
   const navigate = useNavigate()
 
@@ -29,6 +29,7 @@ export function SearchModal() {
   const matches = q.trim() === ''
     ? []
     : vehicles.filter(v => {
+        if (v.status === 'vendido' || v.status === 'inativo') return false
         const full = `${v.marca} ${v.modelo} ${v.versao} ${v.categoria} ${v.combustivel}`.toLowerCase()
         return full.includes(q.toLowerCase())
       }).slice(0, 6)

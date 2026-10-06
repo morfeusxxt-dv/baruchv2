@@ -4,7 +4,8 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { ArrowLeft, ArrowRight, ShieldCheck, Gauge, Zap, CheckCircle2, Sparkles, Star, MapPin, Award } from 'lucide-react'
 import { Button, Img, Reveal, SectionHeading } from './ui'
 import { VehicleCard } from './VehicleCard'
-import { BRANDS, brandCount, brandIcon, featured, vehicles, waLink } from '../lib/data'
+import { BRANDS, brandCount, brandIcon, waLink } from '../lib/data'
+import { useStore } from '../lib/store'
 
 export function Metrics() {
   const items = [
@@ -33,9 +34,13 @@ export function Metrics() {
 }
 
 export function FeaturedCarousel() {
+  const { vehicles } = useStore()
   const [ref, api] = useEmblaCarousel({ align: 'start', dragFree: true, containScroll: 'trimSnaps' })
   const prev = useCallback(() => api?.scrollPrev(), [api])
   const next = useCallback(() => api?.scrollNext(), [api])
+
+  const featured = vehicles.filter(v => v.destaque && v.status !== 'vendido')
+  const displayList = featured.length > 0 ? featured : vehicles.slice(0, 6)
   
   return (
     <section className="bg-gradient-to-b from-yellow-50/30 via-slate-50/50 to-white py-24 lg:py-32 relative overflow-hidden" aria-labelledby="destaques">
@@ -62,7 +67,7 @@ export function FeaturedCarousel() {
       </div>
       <div className="mt-12 overflow-hidden pl-6 lg:pl-[max(3rem,calc((100vw-1480px)/2+3rem))] relative z-10" ref={ref}>
         <div className="flex cursor-grab gap-6 pr-6 active:cursor-grabbing pb-4">
-          {featured.map(v => (
+          {displayList.map(v => (
             <div key={v.id} className="min-w-0 shrink-0 basis-[85%] sm:basis-[48%] lg:basis-[31%]">
               <VehicleCard v={v} />
             </div>

@@ -49,6 +49,17 @@ import { useStore } from '../lib/store'
 
 export default function Veiculo() {
   const { slug } = useParams()
+  const {
+    getVehicle,
+    vehicles,
+    toggleFavorite,
+    isFavorite,
+    toggleCompare,
+    inCompare,
+    setTestDriveModal,
+    setConsorcioModal,
+  } = useStore()
+
   const v = getVehicle(slug)
   const [ref, api] = useEmblaCarousel({ loop: true })
   const [idx, setIdx] = useState(0)
@@ -58,15 +69,6 @@ export default function Veiculo() {
   const [sent, setSent] = useState(false)
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState<'specs' | 'opcionais' | 'descricao'>('specs')
-
-  const {
-    toggleFavorite,
-    isFavorite,
-    toggleCompare,
-    inCompare,
-    setTestDriveModal,
-    setConsorcioModal,
-  } = useStore()
 
   useEffect(() => {
     if (!api) return

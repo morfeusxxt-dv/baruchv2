@@ -4,17 +4,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Zap, ShieldCheck, ArrowRight, MessageCircle, Bike, CheckCircle2, ChevronRight, Calculator, Flame, Smartphone } from 'lucide-react'
 import { VehicleCard } from '../components/VehicleCard'
 import { Button, Reveal, SectionHeading } from '../components/ui'
-import { motos, brl, waLink, MOTO_CATEGORIES, getMotoCategory, MotoSubcategory, Vehicle } from '../lib/data'
+import { brl, waLink, MOTO_CATEGORIES, getMotoCategory, MotoSubcategory, Vehicle } from '../lib/data'
 import { useStore } from '../lib/store'
 
 export default function Motos() {
   const [cat, setCat] = useState<MotoSubcategory | 'todas'>('todas')
   const [combustivel, setCombustivel] = useState<'todos' | 'flex' | 'hibrido' | 'eletrico'>('todos')
   const [q, setQ] = useState('')
-  const { setConsorcioModal } = useStore()
+  const { motos, setConsorcioModal } = useStore()
 
   const list = useMemo(() => {
     return motos.filter(m => {
+      if (m.status === 'vendido' || m.status === 'inativo') return false
       const matchText = `${m.marca} ${m.modelo} ${m.versao} ${m.descricao}`.toLowerCase().includes(q.toLowerCase())
       if (!matchText) return false
       
@@ -27,7 +28,7 @@ export default function Motos() {
 
       return true
     })
-  }, [cat, combustivel, q])
+  }, [motos, cat, combustivel, q])
 
   return (
     <div className="min-h-screen bg-slate-50/50 pb-32 pt-32 lg:pt-36">

@@ -18,10 +18,13 @@ import Veiculo from './pages/Veiculo'
 import ConsorcioImoveis from './pages/ConsorcioImoveis'
 import ConsorcioNautica from './pages/ConsorcioNautica'
 import ConsorcioPesados from './pages/ConsorcioPesados'
+import Admin from './pages/Admin'
 import { Marcas, QuemSomos, Consorcio, Contato } from './pages/Institucional'
 
 export default function App() {
   const location = useLocation()
+  const isAdmin = location.pathname.startsWith('/admin')
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [location.pathname])
 
   return (
@@ -30,7 +33,7 @@ export default function App() {
         Pular para o conteúdo
       </a>
       
-      <Header />
+      {!isAdmin && <Header />}
 
       <AnimatePresence mode="wait">
         <motion.main
@@ -48,6 +51,10 @@ export default function App() {
             <Route path="/financiamento" element={<Financiamento />} />
             <Route path="/avaliacao" element={<Avaliacao />} />
             <Route path="/veiculo/:slug" element={<Veiculo />} />
+            
+            {/* Painel Administrativo / CMS */}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/painel" element={<Admin />} />
             
             {/* Páginas Dedicadas de Consórcio e Categorias */}
             <Route path="/consorcio" element={<Consorcio />} />
@@ -67,8 +74,8 @@ export default function App() {
         </motion.main>
       </AnimatePresence>
 
-      <Footer />
-      <WhatsAppFloat />
+      {!isAdmin && <Footer />}
+      {!isAdmin && <WhatsAppFloat />}
 
       {/* Modais e Drawers Globais */}
       <ConsorcioModal />
@@ -79,3 +86,4 @@ export default function App() {
     </StoreProvider>
   )
 }
+
