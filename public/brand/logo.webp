@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Baruch Veículos | Novos &amp; Seminovos em São Luís - MA</title>
+    <meta name="description" content="Os melhores veículos e as melhores condições você encontra na Baruch Veículos.">
+    <meta name="author" content="afcode" />
+    <link rel="icon" type="image/png" href="https://baruchveiculos.com.br/favicon.png">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://baruchveiculos.com.br/" />
+    <meta property="og:title" content="Baruch Veículos | Novos &amp; Seminovos em São Luís - MA" />
+    <meta property="og:description" content="Os melhores veículos e as melhores condições você encontra na Baruch Veículos." />
+    <meta property="og:image" content="https://baruchveiculos.com.br/card.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ecriativo" />
+    <meta name="twitter:title" content="Baruch Veículos | Novos &amp; Seminovos em São Luís - MA" />
+    <meta name="twitter:description" content="Os melhores veículos e as melhores condições você encontra na Baruch Veículos." />
+    <meta name="twitter:image" content="https://baruchveiculos.com.br/card.jpg" />
+
+    <link rel="preconnect" href="https://ujqrxgtxrrymlyanolmi.supabase.co" crossorigin />
+    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+    <script type="module" crossorigin src="/assets/index-YpaelrQf.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-query-Dihfqfbc.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-supabase-B9U2dohD.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-paR0nhR1.js">
+    <link rel="stylesheet" crossorigin href="/assets/vendor-react-BC8YhJeI.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-DlBjezkh.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

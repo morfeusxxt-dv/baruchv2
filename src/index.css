@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0d11;
+  --color-graphite: #15181e;
+  --color-steel: #232730;
+  --color-line: rgba(0, 0, 0, 0.08);
+  --color-line-dark: rgba(255, 255, 255, 0.1);
+  --color-metal: #64748b;
+  --color-paper: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f1f5f9;
+  --color-gold: #eab308;
+  --color-gold-hover: #ca8a04;
+  --color-gold-deep: #a16207;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; background: #ffffff; }
+body {
+  font-family: var(--font-sans);
+  background: #ffffff;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.03em; }
+::selection { background: #fef08a; color: #000; }
+
+:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; border-radius: 6px; }
+
+.eyebrow {
+  font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: #a16207; font-weight: 600; display: inline-flex; align-items: center; gap: .75rem;
+}
+.eyebrow::before { content: ""; width: 28px; height: 1.5px; background: currentColor; }
+
+.eyebrow-light {
+  font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: #fbbf24; font-weight: 600; display: inline-flex; align-items: center; gap: .75rem;
+}
+.eyebrow-light::before { content: ""; width: 28px; height: 1.5px; background: currentColor; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.skeleton {
+  background: linear-gradient(100deg, #f1f5f9 30%, #e2e8f0 50%, #f1f5f9 70%);
+  background-size: 200% 100%; animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+.logo-b {
+  -webkit-mask: url(/brand/favicon.png) center / 190% auto no-repeat;
+  mask: url(/brand/favicon.png) center / 190% auto no-repeat;
+  mask-mode: luminance;
+  -webkit-mask-mode: luminance;
+}
+
+.brand-glyph {
+  -webkit-mask: var(--g) center / contain no-repeat;
+  mask: var(--g) center / contain no-repeat;
+  background: currentColor;
+}
+
+.hero-luxury-mesh {
+  background: radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(15, 23, 42, 0.03) 0%, transparent 50%),
+              linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
