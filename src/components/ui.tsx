@@ -8,60 +8,28 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 export function Logo({ size = 42, wordmark = true, dark = false }: { size?: number; wordmark?: boolean; dark?: boolean }) {
   const h = size
-  const w = Math.round(size * 0.68)
+  const w = Math.round(size * 0.65)
 
   return (
-    <span className="inline-flex items-center gap-2.5 select-none" aria-label="Baruch Veículos">
-      {/* Official Emblem: Yellow Capsule with stylized Black Cursive B */}
-      <svg
+    <span className="inline-flex items-center gap-2 select-none" aria-label="Baruch Veículos">
+      {/* Official Emblem: Authentic Yellow Capsule with Black Cursive B */}
+      <img
+        src="/brand/emblem.png"
+        alt="Baruch Veículos"
         width={w}
         height={h}
-        viewBox="0 0 52 74"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="shrink-0 transition-transform duration-300 hover:scale-105 drop-shadow-xs"
-      >
-        {/* Yellow Rounded Pill Capsule */}
-        <rect width="52" height="74" rx="26" fill="#FFD400" />
-        
-        {/* Stylized Baruch Calligraphic Cursive 'B' */}
-        <g fill="#0F172A">
-          {/* Main calligraphic B path */}
-          <path
-            d="M 21.5 13.5 
-               C 17.5 13.5, 14 17, 13.5 21
-               C 13 25, 15.5 28, 18.5 32
-               C 16.5 36, 14.5 41.5, 15 47
-               C 15.6 53, 19.5 58.5, 25.5 60
-               C 32.5 61.8, 40 57.5, 41.5 50.5
-               C 42.8 44.5, 39.5 39, 34 37
-               C 38 34.5, 40 30, 39.5 25
-               C 38.8 18.5, 33 13.8, 26 13.5
-               C 24.5 13.4, 23 13.5, 21.5 13.5 Z
-               M 23.5 20.5
-               C 27.5 20.5, 32.5 22.5, 32.8 26.5
-               C 33 30.5, 28.5 33.5, 24 33.5
-               C 21.5 33.5, 19.5 31.5, 19.8 28
-               C 20.2 24.5, 21.5 20.5, 23.5 20.5 Z
-               M 24.5 39
-               C 29.5 39, 35 41.5, 34.5 48
-               C 34 53.5, 28.5 55, 24 54
-               C 20 53, 19.2 48.5, 19.8 44
-               C 20.2 40.5, 22 39, 24.5 39 Z"
-            fillRule="evenodd"
-          />
-          {/* Top flourish accent */}
-          <circle cx="20" cy="18" r="2.2" fill="#0F172A" />
-        </g>
-      </svg>
+        className="shrink-0 object-contain drop-shadow-xs transition-transform duration-300 hover:scale-105"
+        style={{ height: h, width: 'auto' }}
+        loading="eager"
+      />
 
       {/* Official Wordmark */}
       {wordmark && (
         <span className="flex flex-col justify-center leading-none">
-          <span className={`font-display text-[1.42rem] font-black tracking-[0.07em] ${dark ? 'text-white' : 'text-slate-950'}`}>
+          <span className={`font-display text-[1.44rem] font-black tracking-[0.06em] ${dark ? 'text-white' : 'text-slate-950'}`}>
             BARUCH
           </span>
-          <span className={`mt-0.5 text-[0.58rem] font-extrabold tracking-[0.38em] ${dark ? 'text-yellow-400' : 'text-slate-500'}`}>
+          <span className={`mt-0.5 text-[0.56rem] font-extrabold tracking-[0.42em] ${dark ? 'text-yellow-400' : 'text-slate-500'}`}>
             VEÍCULOS
           </span>
         </span>
